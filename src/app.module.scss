@@ -1,0 +1,12 @@
+.appHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-height: 80px;
+  z-index: 1000;
+  background-color: lightblue;
+  border-bottom: 1px solid red;
+}
