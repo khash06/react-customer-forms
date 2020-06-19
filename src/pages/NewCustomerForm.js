@@ -1,71 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import { useHistory, useLocation } from 'react-router-dom';
 import styles from './newcustomerform.module.scss';
 
 const NewCustomerForm = () => {
-    const [name, setName] = useState('');
-    const [address1, setAddress1] = useState('');
-    const [address2, setAddress2] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [areaCode, setAreaCode] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
 
-    const nameChange = (event) => {
-        setName(event.target.value);
+    let history = useHistory();
+
+    let location = useLocation();
+
+    const [form, setState] = useState({
+        name: '',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zipCode: null,
+        areaCode: null,
+        phoneNumber: null,
+    });
+
+    const updateField = e => {
+        console.log(e.target.value)
+        setState({
+            ...form,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const address1Change = (event) => {
-        setAddress1(event.target.value);
-    };
+    const onSubmit = () => {
+        history.push({
+            pathname: "/review",
+            state: { 
+                input: form,
+                editPage: false
+            }
+        });
+    };  
 
-    const address2Change = (event) => {
-        setAddress2(event.target.value);
-    };
-
-    const zipCodeChange = (event) => {
-        setZipCode(event.target.value);
-    };
-
-    const areaCodeChange = (event) => {
-        setAreaCode(event.target.value);
-    };
-
-    const phoneNumberChange = (event) => {
-        setPhoneNumber(event.target.value);
-    };
+    
+    
 
     return (
         <Container maxWidth="sm">
             <form className={styles.formContainer}>
-                <FormControl>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input required id="name" value={name} onChange={nameChange} />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="address1">Address</InputLabel>
-                    <Input required id="address1" value={address1} onChange={address1Change} />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="name">Address (cont.)</InputLabel>
-                    <Input id="address2" value={address2} onChange={address2Change} />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="zip">Zip Code</InputLabel>
-                    <Input required id="zipCode" value={zipCode} onChange={zipCodeChange} />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="areaCode">Phone Area Code</InputLabel>
-                    <Input required id="areaCode" value={areaCode} onChange={areaCodeChange} />
-                </FormControl>
-                <FormControl>
-                    <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
-                    <Input required id="phoneNumber" value={phoneNumber} onChange={phoneNumberChange} />
-                </FormControl>
+                <header>Applicant Info</header>
+                <TextField required id="name" name="name" label="Name" onChange={updateField}></TextField>
+                <TextField required id="address1" name="address1" label="Address" onChange={updateField}></TextField>
+                <TextField id="address2" name="address2" label="Address (cont.)" onChange={updateField}></TextField>
+                <TextField required id="city" name="city" label="City" onChange={updateField}></TextField>
+                <TextField required id="state" name="state" label="State" onChange={updateField}></TextField>
+                <TextField required id="zipCode" name="zipCode" label="Zip Code" onChange={updateField}></TextField>
+                <TextField required id="areaCode" name="areaCode" label="Area Code" onChange={updateField}></TextField>
+                <TextField required id="phoneNumber" name="phoneNumber" label="Phone Number" onChange={updateField}></TextField>
+                <Button onClick={onSubmit} variant="outlined">Review Application</Button>
             </form>
         </Container>
     );

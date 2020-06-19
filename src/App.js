@@ -2,7 +2,9 @@ import React from 'react';
 import styles from './app.module.scss';
 import EntryCard from './components/EntryCard';
 import NewCustomerForm from './pages/NewCustomerForm';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import ExistingCustomerForm from './pages/ExistingCustomerForm';
+import Review from './pages/Review';
+import { Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -14,8 +16,14 @@ function App() {
           <Route path="/" exact>
             <EntryCard />
           </Route>
-          <Route path="/newcustomer">
+          <Route path="/new_customer">
             <NewCustomerForm />
+          </Route>
+          <Route path="/existing_customer">
+            <ExistingCustomerForm />
+          </Route>
+          <Route path="/review">
+            <Review />
           </Route>
         </Switch>
     </div>

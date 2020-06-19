@@ -1,3 +1,10 @@
+Customer Sign-up form created using React and Material UI. Clone of production app created for work in Angular 8, Project Clarity, Express/Node.js, and MySQL. 
+
+TODO:  
+* Add GraphQL server
+* Add Mongo database to save user data
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
