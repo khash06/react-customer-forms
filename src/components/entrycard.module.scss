@@ -1,5 +1,33 @@
 .cardContainer {
-    border: 1px solid red;
-    height: 400px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    height: 85%;
     margin-top: 150px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgb(238, 238, 238);
+    padding: 12px;
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.radioContainer {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }

@@ -27,21 +27,22 @@ const EntryCard = () => {
         <Container maxWidth="md">
             <div className={styles.cardContainer}>
                 <header className={styles.header}>Application for Wholesale Purchasing Account</header>
-                <section>
+                <section className={styles.radioContainer}>
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Where are you applying from?</FormLabel>
                         <RadioGroup aria-label="country" name="countryName" value={country} onChange={countryChange} row>
                             <FormControlLabel value="united_states" control={<Radio />} label="UNITED STATES" />
                             <FormControlLabel disabled value="canada" control={<Radio />} label="CANADA" />
                         </RadioGroup>
+                        <FormLabel component="legend">Customer Type</FormLabel>
                         <RadioGroup aria-label="customer" name="customerType" value={customer} onChange={customerChange} row>
                             <FormControlLabel value="new_customer" control={<Radio />} label="NEW CUSTOMER"></FormControlLabel>
                             <FormControlLabel value="existing_customer" control={<Radio />} label="EXISTING CUSTOMER"></FormControlLabel>
                         </RadioGroup>
                     </FormControl>
                 </section>
-                <section>
-                    <p>To make this process faster, having the following documents will help:</p>
+                <section className={styles.textContainer}>
+                    <span>To make this process faster, having the following documents will help:</span>
                     <ul>
                         <li>Business License Certificate (mandatory)</li>
                         <li>Disposal Fee Exemption (if applicable)</li>
@@ -51,7 +52,7 @@ const EntryCard = () => {
                 <section>
                     <SelectionButtons customer={customer} country={country}/>
                 </section>
-                <footer>© {currentYear} Keishi's Tires</footer>
+                <footer className={styles.footer}>© {currentYear} Keishi's Tires</footer>
             </div>
         </Container>
     );
