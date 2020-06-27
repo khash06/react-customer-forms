@@ -37,11 +37,10 @@ const VerifyUser = ({ custType }) => {
     return (
         <div>
             <div className={styles.verifyContainer}>
-                <TextField label={`Enter your ${cust}`} onChange={updateNumber} name="custNumber"></TextField> 
+                <TextField label={`Enter your ${cust}`} onChange={updateNumber} name="custNumber" style={{ width: 300 }}></TextField> 
                 <span>AND</span>
                 <TextField label="Enter Zip Code" onChange={updateNumber} name="zipCode"></TextField>
                 <Button variant="outlined" onClick={verifyUser}>Search</Button>
-                
             </div>
             <div>
                 {verified ? <UploadDocumets type={custType}/> : null}

@@ -5,24 +5,28 @@ import PublishIcon from '@material-ui/icons/Publish';
 
 const UploadDocuments = ({ type }) => {
 
-    const [files, setFileUploads] = useState({
-        blc: [],
-        tax: [],
-        credit: [],
-        additional: []
-    });
+    const [blcFile, setBlcFile] = useState('');
+    const [blcFileName, setBlcFileName] = useState('');
+    const [taxFile, setTaxFile] = useState('');
+    const [taxFileName, setTaxFileName] = useState('');
+    const [creditFile, setCreditFile] = useState('');
+    const [creditFileName, setCreditFileName] = useState('');
+    const [additionalFile, setAdditionalFile] = useState('');
+    const [additionalFileName, setAdditionalFileName] = useState('');
 
-    const updateField = e => {
-        console.log(e.target.value)
+    const updateBLC = e => {
+        setBlcFile(e.target.files[0]);
+        setBlcFileName(e.target.files[0].name);
     }
 
     const renderAdditional = () => {
         return (
             <div>
-                <div>
+                <div className={styles.uploadField}>
                     <span>Credit Documents (max upload 4 files)</span>
                     <input
-                        className={styles.input} 
+                        className={styles.input}
+                        name="credit" 
                         type="file" 
                         id="upload-button-credit"
                         multiple 
@@ -35,10 +39,11 @@ const UploadDocuments = ({ type }) => {
                         </Button>
                     </label>
                 </div>
-                <div>
+                <div className={styles.uploadField}>
                     <span>Additional Documents (max upload 4 files)</span>
                     <input
-                        className={styles.input} 
+                        className={styles.input}
+                        name="additional" 
                         type="file" 
                         id="upload-button-additional"
                         multiple 
@@ -57,10 +62,12 @@ const UploadDocuments = ({ type }) => {
 
     return (
         <div>
-            <div>
+            <div className={styles.uploadField}>
                 <span>Business License Certificates</span>
                 <input
-                    className={styles.input} 
+                    className={styles.input}
+                    name="blc"
+                    onChange={updateBLC} 
                     type="file" 
                     id="upload-button-blc" 
                     accept="image/png,image/jpeg,image/tiff,image/bmp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
@@ -72,10 +79,11 @@ const UploadDocuments = ({ type }) => {
                     </Button>
                 </label>
             </div>
-            <div>
+            <div className={styles.uploadField}>
                 <span>Tax Documents (max upload 4 files)</span>
                 <input
-                    className={styles.input} 
+                    className={styles.input}
+                    name="tax" 
                     type="file" 
                     id="upload-button-tax"
                     multiple 
