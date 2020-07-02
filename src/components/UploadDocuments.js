@@ -1,22 +1,32 @@
-import React, { useState }from 'react';
+import React, { useState, useEffect }from 'react';
 import Button from '@material-ui/core/Button';
 import styles from './uploaddocuments.module.scss';
 import PublishIcon from '@material-ui/icons/Publish';
+import Chip from '@material-ui/core/Chip';
 
 const UploadDocuments = ({ type }) => {
 
     const [blcFile, setBlcFile] = useState('');
     const [blcFileName, setBlcFileName] = useState('');
-    const [taxFile, setTaxFile] = useState('');
-    const [taxFileName, setTaxFileName] = useState('');
+    const [taxFile, setTaxFile] = useState([]);
     const [creditFile, setCreditFile] = useState('');
-    const [creditFileName, setCreditFileName] = useState('');
     const [additionalFile, setAdditionalFile] = useState('');
-    const [additionalFileName, setAdditionalFileName] = useState('');
 
     const updateBLC = e => {
         setBlcFile(e.target.files[0]);
         setBlcFileName(e.target.files[0].name);
+    }
+
+    const updateTax = e => {
+        setTaxFile([...taxFile, ...e.target.files])
+    }
+
+    useEffect(() => {
+        console.log(taxFile)
+    }, [taxFile])
+
+    const handleDelete = (e) => {
+        console.log('delete me', e)
     }
 
     const renderAdditional = () => {
@@ -83,6 +93,7 @@ const UploadDocuments = ({ type }) => {
                 <span>Tax Documents (max upload 4 files)</span>
                 <input
                     className={styles.input}
+                    onChange={updateTax}
                     name="tax" 
                     type="file" 
                     id="upload-button-tax"
@@ -96,6 +107,14 @@ const UploadDocuments = ({ type }) => {
                     </Button>
                 </label>
             </div>
+            {taxFile.map((file, index) => {
+                return(
+                    <li key={index}>
+                        <Chip label={file.name} onDelete={handleDelete}/>
+                    </li>
+                    
+                )
+            })}
             {type === 'existing_customer' 
                 ? renderAdditional()
                 : null
