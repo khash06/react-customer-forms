@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import styles from './uploaddocuments.module.scss';
 import PublishIcon from '@material-ui/icons/Publish';
 import Chip from '@material-ui/core/Chip';
+import FileUploadChipMulti from './FileUploadChipMulti';
 
 const UploadDocuments = ({ type }) => {
 
@@ -21,13 +22,19 @@ const UploadDocuments = ({ type }) => {
         setTaxFile([...taxFile, ...e.target.files])
     }
 
+    const deleteFile = (type, file) => {
+        if (type === 'tax') {
+            setTaxFile(taxFile.filter(selectedFile => selectedFile !== file));
+        } else if (type === 'credit') {
+            setCreditFile(creditFile.filter(selectedFile => selectedFile != file));
+        } else {
+            setAdditionalFile(additionalFile.filter(selectedFile => selectedFile !== file));
+        }
+    };
+
     useEffect(() => {
         console.log(taxFile)
     }, [taxFile])
-
-    const handleDelete = (e) => {
-        console.log('delete me', e)
-    }
 
     const renderAdditional = () => {
         return (
@@ -107,14 +114,7 @@ const UploadDocuments = ({ type }) => {
                     </Button>
                 </label>
             </div>
-            {taxFile.map((file, index) => {
-                return(
-                    <li key={index}>
-                        <Chip label={file.name} onDelete={handleDelete}/>
-                    </li>
-                    
-                )
-            })}
+            <FileUploadChipMulti onDelete={(file) => deleteFile('tax', file)} files={taxFile}/>
             {type === 'existing_customer' 
                 ? renderAdditional()
                 : null
