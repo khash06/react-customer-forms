@@ -7,15 +7,13 @@ import FileUploadChipMulti from './FileUploadChipMulti';
 
 const UploadDocuments = ({ type }) => {
 
-    const [blcFile, setBlcFile] = useState('');
-    const [blcFileName, setBlcFileName] = useState('');
+    const [blcFile, setBlcFile] = useState([]);
     const [taxFile, setTaxFile] = useState([]);
-    const [creditFile, setCreditFile] = useState('');
-    const [additionalFile, setAdditionalFile] = useState('');
+    const [creditFile, setCreditFile] = useState([]);
+    const [additionalFile, setAdditionalFile] = useState([]);
 
     const updateBLC = e => {
-        setBlcFile(e.target.files[0]);
-        setBlcFileName(e.target.files[0].name);
+        setBlcFile([...blcFile, ...e.target.files]);
     }
 
     const updateTax = e => {
@@ -26,15 +24,18 @@ const UploadDocuments = ({ type }) => {
         if (type === 'tax') {
             setTaxFile(taxFile.filter(selectedFile => selectedFile !== file));
         } else if (type === 'credit') {
-            setCreditFile(creditFile.filter(selectedFile => selectedFile != file));
-        } else {
+            setCreditFile(creditFile.filter(selectedFile => selectedFile !== file));
+        } else if (type === 'additional') {
             setAdditionalFile(additionalFile.filter(selectedFile => selectedFile !== file));
+        } else if (type === 'blc') {
+            setBlcFile(blcFile.filter(selectedFile => selectedFile.name !== file[0].name));
         }
     };
 
     useEffect(() => {
         console.log(taxFile)
-    }, [taxFile])
+        console.log(blcFile)
+    }, [taxFile, blcFile])
 
     const renderAdditional = () => {
         return (
@@ -56,6 +57,7 @@ const UploadDocuments = ({ type }) => {
                         </Button>
                     </label>
                 </div>
+                <FileUploadChipMulti onDelete={(file) => deleteFile('credit', file)} files={creditFile}/>
                 <div className={styles.uploadField}>
                     <span>Additional Documents (max upload 4 files)</span>
                     <input
@@ -73,6 +75,7 @@ const UploadDocuments = ({ type }) => {
                         </Button>
                     </label>
                 </div>
+                <FileUploadChipMulti onDelete={(file) => deleteFile('additional', file)} files={additionalFile}/>
             </div>
         );
     }
@@ -96,6 +99,7 @@ const UploadDocuments = ({ type }) => {
                     </Button>
                 </label>
             </div>
+            {blcFile.length > 0 ? <Chip label={blcFile[0].name} onDelete={() => deleteFile('blc', blcFile)} /> : null}
             <div className={styles.uploadField}>
                 <span>Tax Documents (max upload 4 files)</span>
                 <input
