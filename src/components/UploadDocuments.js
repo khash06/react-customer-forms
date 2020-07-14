@@ -3,7 +3,21 @@ import Button from '@material-ui/core/Button';
 import styles from './uploaddocuments.module.scss';
 import PublishIcon from '@material-ui/icons/Publish';
 import Chip from '@material-ui/core/Chip';
+import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import FileUploadChipMulti from './FileUploadChipMulti';
+import {
+    FILE_FORMAT_ERROR,
+    FILE_COUNT_ERROR,
+    FILE_SIZE_ERROR,
+    FILE_LIMIT_ERROR,
+    FILE_SIZE_LIMIT,
+    FILE_FORMATS_ALLOWED
+} from '../shared/constants.util';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const UploadDocuments = ({ type }) => {
 
@@ -11,13 +25,21 @@ const UploadDocuments = ({ type }) => {
     const [taxFile, setTaxFile] = useState([]);
     const [creditFile, setCreditFile] = useState([]);
     const [additionalFile, setAdditionalFile] = useState([]);
+    const [error, setError] = useState(null)
 
     const updateBLC = e => {
         setBlcFile([...blcFile, ...e.target.files]);
     }
 
     const updateTax = e => {
-        setTaxFile([...taxFile, ...e.target.files])
+        const files = [...e.target.files];
+        const currentLength = taxFile.length;
+        const totalLength = files.length + currentLength;
+        if (fileSanityCheck(files, true) && totalLength < 5) {
+            setTaxFile([...taxFile, ...e.target.files]);
+        } else {
+            setError(true)
+        }
     }
 
     const deleteFile = (type, file) => {
@@ -36,6 +58,31 @@ const UploadDocuments = ({ type }) => {
         console.log(taxFile)
         console.log(blcFile)
     }, [taxFile, blcFile])
+
+    const fileSanityCheck = (files, allowMultiple) => {
+        let type = false;
+        let size = false;
+        
+        if((allowMultiple && files.length > 4) || (!allowMultiple && files.length > 1)) {
+            return false;
+        }
+
+        files.forEach(file => {
+            type = FILE_FORMATS_ALLOWED.includes(file.type);
+            size = file.size < FILE_SIZE_LIMIT;
+            
+        })
+    
+
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        } else {
+            setError(false)
+        }
+    };
 
     const renderAdditional = () => {
         return (
@@ -117,6 +164,17 @@ const UploadDocuments = ({ type }) => {
                         Upload File
                     </Button>
                 </label>
+            </div>
+            <div>
+                {error 
+                ?
+                //TODO: extract out to new component  
+                <Snackbar open={error} autoHideDuration={5000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error">
+                        {FILE_COUNT_ERROR}
+                    </Alert>
+                </Snackbar>
+                : null}
             </div>
             <FileUploadChipMulti onDelete={(file) => deleteFile('tax', file)} files={taxFile}/>
             {type === 'existing_customer' 

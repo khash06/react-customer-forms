@@ -11,7 +11,6 @@ function Alert(props) {
 };
 
 const SelectionButtons = (props) => {
-    console.log(props)
     const [show, showFields] = useState(false);
     const [showError, setError] = useState(false);
 
