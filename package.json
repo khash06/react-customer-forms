@@ -20,10 +20,45 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier \"src/**/*.{js, html}\" --write",
+    "lint": "eslint \"src/**/*.{js, jsx}\" --quiet"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "eslint: recommended",
+      "plugin: import/errors",
+      "plugin: react/recommended",
+      "plugin: jsx-a11y/recommended",
+      "prettier",
+      "prettier/react"
+    ],
+    "rules": {
+      "react/prop-types": 0,
+      "no-console": 1
+    },
+    "plugins": [
+      "react",
+      "import",
+      "jsx-a11y"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
   },
   "browserslist": {
     "production": [
@@ -36,5 +71,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "prettier": "^2.0.5"
   }
 }
