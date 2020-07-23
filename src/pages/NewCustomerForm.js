@@ -4,7 +4,6 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { useHistory, useLocation } from "react-router-dom";
 import NewCustomerFormInput from "./NewCustomerFormInput";
 import Review from "./Review";
 import styles from "./newcustomerform.module.scss";
@@ -17,9 +16,9 @@ const NewCustomerForm = () => {
     address2: "",
     city: "",
     state: "",
-    zipCode: null,
-    areaCode: null,
-    phoneNumber: null,
+    zipCode: "",
+    areaCode: "",
+    phoneNumber: "",
   });
 
   const toNext = () => {
@@ -74,6 +73,12 @@ const NewCustomerForm = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submitted", e);
+    //send data to server/backend
+  };
+
   return (
     <>
       {form.currentStep === 1 ? (
@@ -82,7 +87,7 @@ const NewCustomerForm = () => {
           formDetails={form}
         />
       ) : (
-        <Review formDetails={form} />
+        <Review formDetails={form} handleSubmit={(e) => handleSubmit(e)} />
       )}
       <FormNavButton />
     </>

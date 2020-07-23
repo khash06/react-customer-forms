@@ -2,9 +2,9 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-const Review = ({ formDetails }) => {
+const Review = ({ formDetails, handleSubmit }) => {
   console.log(formDetails);
-
+  // loop to complete list items
   return (
     <main>
       <Container maxWidth="md">
@@ -25,7 +25,7 @@ const Review = ({ formDetails }) => {
             <p>Phone Number: {formDetails.phoneNumber}</p>
           </article>
         </section>
-        <Button>Submit</Button>
+        <Button onClick={(e) => handleSubmit(e)}>Submit</Button>
       </Container>
     </main>
   );
