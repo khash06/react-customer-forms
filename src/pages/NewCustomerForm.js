@@ -47,7 +47,7 @@ const NewCustomerForm = () => {
         <Button
           endIcon={<ArrowForwardIosIcon />}
           onClick={toNext}
-          className="nextButton"
+          className={styles.nextButton}
         >
           Next
         </Button>
@@ -80,7 +80,7 @@ const NewCustomerForm = () => {
   };
 
   return (
-    <>
+    <div className={styles.formContainer}>
       {form.currentStep === 1 ? (
         <NewCustomerFormInput
           handleChange={(e) => updateField(e)}
@@ -90,7 +90,7 @@ const NewCustomerForm = () => {
         <Review formDetails={form} handleSubmit={(e) => handleSubmit(e)} />
       )}
       <FormNavButton />
-    </>
+    </div>
   );
 };
 

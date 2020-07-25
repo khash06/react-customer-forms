@@ -1,9 +1,8 @@
 import React from "react";
 import { TextField, Container } from "@material-ui/core";
-import styles from "./newcustomerform.module.scss";
+import styles from "./newcustomerforminput.module.scss";
 
 const NewCustomerFormInput = ({ handleChange, formDetails }) => {
-  console.log(formDetails);
   return (
     <Container maxWidth="sm">
       <form className={styles.formContainer}>
